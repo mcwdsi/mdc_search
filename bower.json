@@ -1,5 +1,5 @@
 {
-  "name": "mdc",
+  "name": "mdc-search",
   "version": "0.0.0",
   "dependencies": {
     "angular": "1.5.5",
@@ -19,7 +19,7 @@
     "angular-mocks": "^1.3.0"
   },
   "appPath": "app",
-  "moduleName": "mdcApp",
+  "moduleName": "mdcSearch",
   "overrides": {
     "bootstrap": {
       "main": [

@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 angular
-  .module('mdsApp', [
+  .module('mdcSearch', [
     'ui.bootstrap',
   'ngAnimate',
     'ngCookies',

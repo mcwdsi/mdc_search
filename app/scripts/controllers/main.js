@@ -9,54 +9,101 @@
  * # MainCtrl
  * Controller of the obc-grants
  */
-angular.module('mdsApp') 
-    .controller('MainCtrl', function ($scope, $location, $http, $modal) {
-
+angular.module('mdcSearch') 
+    .controller('MainCtrl', function ($scope, $location, $http,$q, $modal) {
+    	var pathogensDict = {}
+    	var hostsDict = {}
+    	var locationsDict = {}
         var APIURL = 'http://localhost:3000';
         var configName = $location.search().configName;
-$http.get(APIURL + '/mdc_tree')
-    .success(function (data) {
-    $scope.retrievalTerms = data
-    
- $scope.showChildren = function (term) {
-    for (var i in term.children) {
-      term.children[i].show = true;
+        $http.get(APIURL + '/mdc_retrieval')
+        	.success(function (data) {
+			    var pathogensList = [""]
+			    var hostsList = [""]
+			    var locationList = [""]
+			    for (var i in data.pathogens) {
+			    	pathogensDict[i] = data.pathogens[i]
+			    	pathogensList.push(i)
+			    }
+			    for (var i in data.hosts) {
+			    	hostsDict[i] = data.hosts[i]
+			    	hostsList.push(i)
+			    }
+			    for (var i in data.location) {
+			    	locationsDict[i] = data.location[i]
+			    	locationList.push(i)
+			    }
+			    $scope.pathogens = pathogensList;
+        		$scope.locations = locationList;
+        		$scope.hosts = hostsList;
+		})
+
+    $scope.initiateSearch = function () {
+    	// console.log("------")
+    	// console.log($scope.pathogen)
+    	// console.log("pathogen: " + pathogensDict[$scope.pathogen])
+    	// console.log($scope.host)
+    	// console.log("host: " + hostsDict[$scope.host])
+    	// console.log($scope.location)
+    	// console.log("location: " + locationsDict[$scope.location])
+    	$scope.tableModel = [];
+   		var tableModel = [];
+   		var promise = [];
+    	var results = $http.get(APIURL + '/mdc_retrieval/query', {
+	    	params: {
+	        	pathogen: pathogensDict[$scope.pathogen],
+	        	host: hostsDict[$scope.host],
+	        	location: locationsDict[$scope.location]
+
+	      	}
+	    }).success(function (data) {
+		    for (var i in data) {
+		    	console.log(data[i][0])
+		    	var item = processItem(data[i][0])
+	            tableModel.push(item);
+	        }
+	    });
+	    promise.push(results);
+	    $q.all(promise).then(function () {
+      		$scope.tableModel = tableModel;
+    	});
     }
-  };
 
-  $scope.hasChildren = function (term) {
-    return $scope.areTermsEmpty(term.children);
-  };
-
-  $scope.display_detail = function (item) {
-    //if the term that we get back is not root then we should display their information.
-    if (item.isRoot == false){
-      $modal.open({
-        animation: $scope.animationsEnabled,
-        templateUrl: 'views/modals/detail-modal.html',
-        controller: 'DetailModalInstanceController',
-        size: 'lg',
-        resolve: {
-          item: function () {
-            return item;
-          }
-        }
-    });
+    function processItem(data){
+    	var item = {}
+    	for (var key in data){
+    		var value = "";
+    		for (var x in data[key]){
+    			value = data[key][x]  + ", " + value;
+    		}
+    		item[key] = value.slice(0, -2);
+    	}
+    	return item;
     }
-    
-    return $scope.areTermsEmpty(item.children);
+
+      $scope.getItemDetails = function (item) {
+	    $modal.open({
+	      animation: $scope.animationsEnabled,
+	      templateUrl: 'views/modals/detail-modal.html',
+	      controller: 'DetailModalInstanceController',
+	      size: 'lg',
+	      resolve: {
+	        item: function () {
+	          return item;
+	        },
+	        isNewItem: function () {
+	          return false;
+	        },
+	        indexingTerms: function () {
+	          return $scope.indexingTerms;
+	        },
+	        indexingTermsIndex: function () {
+	          return $scope.indexingTermsIndex;
+	        }
+	      }
+	    });
   };
-
-  $scope.areTermsEmpty = function (terms) {
-    if (Object.keys(terms).length === 0 && terms.constructor === Object) {
-      return false;
-    } else {
-      return true;
-    }
-  };
-
-    });
-
+       
 
 
 })

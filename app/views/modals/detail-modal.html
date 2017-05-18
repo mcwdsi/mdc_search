@@ -42,12 +42,12 @@
         <a target="_blank" href='{{item.webAppUrl}}'>{{item.webAppUrl}}</a>
       </td>
     </tr>
-    <tr ng-show="item.licenseName">
+<!--     <tr ng-show="item.licenseName">
       <td>License Name</td>
       <td>
-        <a target="_blank" href='{{item.licenseUrl}}'>{{item.licenseName}}</a>
+        <a target="_blank" ng-attr-href='{{item.licenseUrl}}'>{{item.licenseName}}</a>
       </td>
-    </tr>
+    </tr> -->
     <tr ng-show="item.websiteUrl">
       <td>Website URL</td>
       <td>
@@ -89,6 +89,18 @@
      <tr ng-show="item.version">
       <td>Version</td>
       <td>{{item.version}}</td>
+    </tr>
+     <tr ng-show="item.geoLocationLabel">
+      <td>Geolocation</td>
+      <td>{{item.geoLocationLabel}}</td>
+    </tr>
+    <tr ng-show="item.pathogenPopulationLabel">
+      <td>Pathogen population</td>
+      <td>{{item.pathogenPopulationLabel}}</td>
+    </tr>
+    <tr ng-show="item.pathogenTypeLabel">
+      <td>Pathogen type</td>
+      <td>{{item.pathogenTypeLabel}}</td>
     </tr>
      <tr ng-show="item.doi">
       <td>DOI</td>
