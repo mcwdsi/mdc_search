@@ -57,9 +57,8 @@ angular.module('mdcSearch')
 
 	      	}
 	    }).success(function (data) {
-		    for (var i in data) {
-		    	console.log(data[i][0])
-		    	var item = processItem(data[i][0])
+		    for (var key in data) {
+		    	var item = processItem(data[key][0])
 	            tableModel.push(item);
 	        }
 	    });
