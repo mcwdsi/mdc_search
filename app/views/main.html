@@ -21,24 +21,24 @@
       <div class="panel-body">
         <div class='row' ng-hide='searchHidden'>
           <div class='col-xs-9' >
-            <h4>MDC Search</h4>
+            <h4>Disease Transmission Models Search</h4>
               <table class="table table-striped table-bordered">
                <tr >
                   <td>Pathogen</td>
                   <td>
-                    <select type='text' class='form-control' ng-model='pathogen'>
+                    <select type='text' class='form-control' ng-model='pathogen' ng-init="pathogen='Any'">
                       <option ng-repeat="n in pathogens track by $index">{{n}}</option>
                     </select>
                   </td>
                   <td>Host</td>
                   <td>
-                    <select type='text' class='form-control' ng-model='host'>
+                    <select type='text' class='form-control' ng-model='host' ng-init="host='Any'">
                       <option ng-repeat="n in hosts track by $index">{{n}}</option>
                     </select>
                   </td>
                   <td>Location</td>
                   <td>
-                    <select type='text' class='form-control' ng-model='location'>
+                    <select type='text' class='form-control' ng-model='location' ng-init="location='Any'">
                       <option ng-repeat="n in locations track by $index">{{n}}</option>
                     </select>
                   </td>

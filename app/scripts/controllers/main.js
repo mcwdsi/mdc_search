@@ -14,13 +14,13 @@ angular.module('mdcSearch')
     	var pathogensDict = {}
     	var hostsDict = {}
     	var locationsDict = {}
-        var APIURL = 'http://localhost:3000';
+        var APIURL = 'http://devapi.onbc.io';
         var configName = $location.search().configName;
         $http.get(APIURL + '/mdc_retrieval')
         	.success(function (data) {
-			    var pathogensList = [""]
-			    var hostsList = [""]
-			    var locationList = [""]
+			    var pathogensList = ["Any"]
+			    var hostsList = ["Any"]
+			    var locationList = ["Any"]
 			    for (var i in data.pathogens) {
 			    	pathogensDict[i] = data.pathogens[i]
 			    	pathogensList.push(i)
