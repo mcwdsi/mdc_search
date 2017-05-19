@@ -64,7 +64,12 @@ angular.module('mdcSearch')
 	    });
 	    promise.push(results);
 	    $q.all(promise).then(function () {
-      		$scope.tableModel = tableModel;
+	    	if(tableModel.length == 0){
+	    		$scope.tableModel = [{title:"No Results Found"}];
+	    	}
+	    	else {
+	    		$scope.tableModel = tableModel;
+	    	}
     	});
     }
 
