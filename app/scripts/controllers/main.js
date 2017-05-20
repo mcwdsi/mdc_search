@@ -14,13 +14,15 @@ angular.module('mdcSearch')
     	var pathogensDict = {}
     	var hostsDict = {}
     	var locationsDict = {}
-        var APIURL = 'http://devapi.onbc.io';
+    	var measuresDict = {}
+        var APIURL = 'http://localhost:3000';
         var configName = $location.search().configName;
         $http.get(APIURL + '/mdc_retrieval')
         	.success(function (data) {
 			    var pathogensList = ["Any"]
 			    var hostsList = ["Any"]
 			    var locationList = ["Any"]
+			    var measuresList = ["Any"]
 			    for (var i in data.pathogens) {
 			    	pathogensDict[i] = data.pathogens[i]
 			    	pathogensList.push(i)
@@ -33,9 +35,14 @@ angular.module('mdcSearch')
 			    	locationsDict[i] = data.location[i]
 			    	locationList.push(i)
 			    }
+			    for (var i in data.measures) {
+			    	measuresDict[i] = data.measures[i]
+			    	measuresList.push(i)
+			    }
 			    $scope.pathogens = pathogensList;
         		$scope.locations = locationList;
         		$scope.hosts = hostsList;
+        		$scope.measures = measuresList;
 		})
 
     $scope.initiateSearch = function () {
@@ -46,6 +53,8 @@ angular.module('mdcSearch')
     	// console.log("host: " + hostsDict[$scope.host])
     	// console.log($scope.location)
     	// console.log("location: " + locationsDict[$scope.location])
+    	// console.log($scope.measures)
+    	// console.log("Measures: " + measuresDict[$scope.measure])
     	$scope.tableModel = [];
    		var tableModel = [];
    		var promise = [];
@@ -53,8 +62,8 @@ angular.module('mdcSearch')
 	    	params: {
 	        	pathogen: pathogensDict[$scope.pathogen],
 	        	host: hostsDict[$scope.host],
-	        	location: locationsDict[$scope.location]
-
+	        	location: locationsDict[$scope.location],
+	        	measure: measuresDict[$scope.measure]
 	      	}
 	    }).success(function (data) {
 		    for (var key in data) {
