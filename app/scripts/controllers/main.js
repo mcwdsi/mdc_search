@@ -74,7 +74,7 @@ angular.module('mdcSearch')
 	    promise.push(results);
 	    $q.all(promise).then(function () {
 	    	if(tableModel.length == 0){
-	    		$scope.tableModel = [{title:"No Results Found"}];
+	    		$scope.tableModel = [{prefTerm:"No Results Found"}];
 	    	}
 	    	else {
 	    		$scope.tableModel = tableModel;
