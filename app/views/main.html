@@ -21,7 +21,7 @@
       <div class="panel-body">
         <div class='row' ng-hide='searchHidden'>
           <div class='col-xs-12' >
-            <h4>Disease Transmission Models Search</h4>
+            <h4>MDC Search</h4>
               <table class="table">
                <tr >
                   <td>Pathogen</td>
@@ -53,16 +53,46 @@
                   </td>
               
               </tr>
-
               </table>
+              <br/>
+              <div class="input-group">
+                <label class="checkbox-inline">
+                  <input type="checkbox" ng-model="selection_DTM" ng-init="selection_DTM = true;">Disease Transmission Models</label>
+                <label class="checkbox-inline">
+                  <input type="checkbox" ng-model="selection_datasets" ng-init="selection_datasets = true;">Datasets</label>
+              </div>
+              <br/>
                <button type='submit' ng-click="initiateSearch()" class="btn btn-primary pull-right" >Search</button>
           </div>
         </div>
       </div>
-    </div>
   </div>
-  <div>
-  <div class="panel panel-primary" id="resultsPanel">
+  
+  <!-- This is the premade queries -->
+  <div id="retrievalTermsContainer">
+    <div class=" panel panel-primary">
+      <div class="panel-body">
+        <div class='row' ng-hide='searchHidden'>
+          <div class='col-xs-12' >
+            <h4>Combination Search</h4>
+               <div class="radio">
+                  <label><input type="radio" name="optradio">Dataset and software</label>
+               </div>
+               <div class="radio">
+                  <label><input type="radio"  name="optradio">Software matching by input and output formats</label>
+               </div>
+              <br/>
+               <button type='submit' ng-click="initiateDefaultSearch()" class="btn btn-primary pull-right" >Search</button>
+          </div>
+        </div>
+      </div>
+  
+
+
+
+
+  <!-- This is the results panel -->
+  <div class="panel panel-primary" id="resultsPanel" ng-show="showSearch">
     <div class="panel-heading clearfix">Results
       <div class="pull-right">
       </div>
@@ -71,14 +101,16 @@
       <thead>
         <tr>
           <th>Name</th>
+          <th>type</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="item in tableModel | orderBy:'prefTerm'" ng-click="getItemDetails(item)">
           <td>{{item.prefTerm}}</td>
+          <td>{{item.type}}</td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
-<div>
+

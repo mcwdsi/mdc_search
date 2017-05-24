@@ -15,6 +15,7 @@ angular.module('mdcSearch')
     	var hostsDict = {}
     	var locationsDict = {}
     	var measuresDict = {}
+    	$scope.showSearch = false;
         var APIURL = 'http://localhost:3000';
         var configName = $location.search().configName;
         $http.get(APIURL + '/mdc_retrieval')
@@ -45,34 +46,65 @@ angular.module('mdcSearch')
         		$scope.measures = measuresList;
 		})
 
+	$scope.initiateDefaultSearch = function () {
+		console.log("This ran")
+		var test = $("input[name='optradio'][0]")
+		console.log(test)
+	}
+
     $scope.initiateSearch = function () {
     	// console.log("------")
-    	// console.log($scope.pathogen)
     	// console.log("pathogen: " + pathogensDict[$scope.pathogen])
-    	// console.log($scope.host)
     	// console.log("host: " + hostsDict[$scope.host])
-    	// console.log($scope.location)
     	// console.log("location: " + locationsDict[$scope.location])
-    	// console.log($scope.measures)
     	// console.log("Measures: " + measuresDict[$scope.measure])
+    	var datasets_selected = $scope.selection_datasets
+        var dtm_selected = $scope.selection_DTM
+        $scope.showSearch = true;
     	$scope.tableModel = [];
    		var tableModel = [];
    		var promise = [];
-    	var results = $http.get(APIURL + '/mdc_retrieval/query', {
+   		if (dtm_selected){
+   			var results = $http.get(APIURL + '/mdc_retrieval/query', {
 	    	params: {
+	    		type:"dtm",
 	        	pathogen: pathogensDict[$scope.pathogen],
 	        	host: hostsDict[$scope.host],
 	        	location: locationsDict[$scope.location],
 	        	measure: measuresDict[$scope.measure]
 	      	}
-	    }).success(function (data) {
-		    for (var key in data) {
-		    	var item = processItem(data[key][0])
-	            tableModel.push(item);
-	        }
-	    });
-	    promise.push(results);
-	    $q.all(promise).then(function () {
+		    }).success(function (data) {
+			    for (var key in data) {
+			    	var item = processItem(data[key][0])
+			    	item.type = "DTM"
+		            tableModel.push(item);
+		        }
+		    });
+   		}
+   		if (datasets_selected){
+   			var results = $http.get(APIURL + '/mdc_retrieval/query', {
+	    	params: {
+	    		type:"dataset",
+	        	pathogen: pathogensDict[$scope.pathogen],
+	        	host: hostsDict[$scope.host],
+	        	location: locationsDict[$scope.location],
+	        	measure: measuresDict[$scope.measure]
+	      	}
+		    }).success(function (data) {
+			    for (var key in data) {
+			    	var item = processItem(data[key][0])
+			    	item.type = "Dataset";
+		            tableModel.push(item);
+		        }
+		    });
+   		}
+    	
+    	if(!datasets_selected && ! dtm_selected){
+    		$scope.tableModel = [{prefTerm:"No type selected"}];
+    	}
+    	else {
+    		promise.push(results);
+	    	$q.all(promise).then(function () {
 	    	if(tableModel.length == 0){
 	    		$scope.tableModel = [{prefTerm:"No Results Found"}];
 	    	}
@@ -80,6 +112,8 @@ angular.module('mdcSearch')
 	    		$scope.tableModel = tableModel;
 	    	}
     	});
+    	}
+	   
     }
 
     function processItem(data){
