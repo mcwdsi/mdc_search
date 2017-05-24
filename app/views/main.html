@@ -80,7 +80,7 @@
       <div class="panel-body" ng-hide='searchHidden'>
         <div class='row' >
           <div class='col-xs-12' >
-            <h4>Combination Search</h4>
+            <h4>Potentially interoperable data and software combinations</h4>
             <div class='radio'>
               <label><input type="radio" name="option" value="1"> Dataset and software</label> 
               <label><input type="radio" name="option" value="2"> Software matching by input and output formats</label>
@@ -128,7 +128,8 @@
       <thead>
         <tr>
           <th ng-show="!option">Dataset </th>
-          <th>Input format</th>
+          <th ng-show="!option">Dataset and input format </th>
+          <th ng-show="option">Input format </th>
           <th>Software one</th>
           <th>Intermediate format </th>
           <th>Software two</th>
