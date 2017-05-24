@@ -117,5 +117,39 @@
       </tbody>
     </table>
   </div>
+
+  <!-- Option one table -->
+  <div class="panel panel-primary" id="option1Panel" ng-show="showOptionSearch">
+    <div class="panel-heading clearfix">Results
+      <div class="pull-right">
+      </div>
+    </div>
+    <table id='optionTable' datatable="ng" class="table table-striped table-bordered" dt-options="dtOptions" dt-columns="dtColumns">
+      <thead>
+        <tr>
+          <th ng-show="!option">Dataset </th>
+          <th>Input format</th>
+          <th>Software one</th>
+          <th>Intermediate format </th>
+          <th>Software two</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in optionTableModel | orderBy:'datasetTitle'" ng-show = "!option">
+          <td>{{item.datasetTitle}}</td>
+          <td>{{item.inputDataFormat}}</td>
+          <td>{{item.softwareOne}}</td>
+          <td>{{item.intermediateFormat}}</td>
+          <td>{{item.softwareTwo}}</td>
+        </tr>
+         <tr ng-repeat="item in optionTableModel | orderBy:'prefTerm1'" ng-show = "option">
+          <td>{{item.prefTerm1}}</td>
+          <td>{{item.outputSpec}}</td>
+          <td>{{item.inputSpec}}</td>
+          <td>{{item.prefTerm}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 

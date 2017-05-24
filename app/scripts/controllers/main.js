@@ -16,6 +16,7 @@ angular.module('mdcSearch')
     	var locationsDict = {}
     	var measuresDict = {}
     	$scope.showSearch = false;
+    	$scope.showOptionSearch = false;
         var APIURL = 'http://localhost:3000';
         var configName = $location.search().configName;
         $http.get(APIURL + '/mdc_retrieval')
@@ -48,13 +49,12 @@ angular.module('mdcSearch')
 
 	$scope.initiateDefaultSearch = function () {
 		var radioValue = $("input[name='option']:checked").val();
-		$scope.tableModel = [];
-		$scope.showSearch = true;
+		$scope.optionTableModel = [];
+		$scope.option = radioValue-1;
+		$scope.showSearch = false;
 		var tableModel = [];
-		if (radioValue === undefined){
-			$scope.tableModel = [{prefTerm:"No option selected"}];
-		}
-		else {
+		if (radioValue !== undefined){
+			$scope.showOptionSearch = true;
 			$scope.searchHidden = true;
 			var type = "option" + radioValue;
 			var typeString = radioValue === 1 ? "Dataset" : "Software"
@@ -69,11 +69,10 @@ angular.module('mdcSearch')
 	      	}).success(function (data) {
 			    for (var key in data) {
 			    	var item = processItem(data[key][0])
-			    	console.log(item)
 			    	item.type = typeString
 		            tableModel.push(item);
 		        }
-		        $scope.tableModel = tableModel
+		        $scope.optionTableModel = tableModel
 		    });
 
 
@@ -89,6 +88,7 @@ angular.module('mdcSearch')
     	var datasets_selected = $scope.selection_datasets
         var dtm_selected = $scope.selection_DTM
         $scope.showSearch = true;
+        $scope.showOptionSearch = false;
     	$scope.tableModel = [];
    		var tableModel = [];
    		var promise = [];
