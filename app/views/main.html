@@ -130,9 +130,10 @@
           <th ng-show="!option">Dataset </th>
           <th ng-show="!option">Dataset and input format </th>
           <th ng-show="!option">Software one</th>
+          <th ng-show="!option">Intermediate format </th>
           <th ng-show="option">Software one</th>
-          <th ng-show="option">Input format </th>
-          <th>Intermediate format </th>
+          <th ng-show="option">Output/Input format</th>
+          
           <th>Software two</th>
         </tr>
       </thead>
@@ -146,7 +147,6 @@
         </tr>
          <tr ng-repeat="item in optionTableModel | orderBy:'prefTerm1'" ng-show = "option">
           <td>{{item.prefTerm1}}</td>
-          <td>{{item.outputSpec}}</td>
           <td>{{item.inputSpec}}</td>
           <td>{{item.prefTerm}}</td>
         </tr>
