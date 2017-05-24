@@ -47,9 +47,37 @@ angular.module('mdcSearch')
 		})
 
 	$scope.initiateDefaultSearch = function () {
-		console.log("This ran")
-		var test = $("input[name='optradio'][0]")
-		console.log(test)
+		var radioValue = $("input[name='option']:checked").val();
+		$scope.tableModel = [];
+		$scope.showSearch = true;
+		var tableModel = [];
+		if (radioValue === undefined){
+			$scope.tableModel = [{prefTerm:"No option selected"}];
+		}
+		else {
+			$scope.searchHidden = true;
+			var type = "option" + radioValue;
+			var typeString = radioValue === 1 ? "Dataset" : "Software"
+			var results = $http.get(APIURL + '/mdc_retrieval/query', {
+	    	params: {
+	    		type:type,
+	        	pathogen: pathogensDict[$scope.pathogen],
+	        	host: hostsDict[$scope.host],
+	        	location: locationsDict[$scope.location],
+	        	measure: measuresDict[$scope.measure]
+	      	}
+	      	}).success(function (data) {
+			    for (var key in data) {
+			    	var item = processItem(data[key][0])
+			    	console.log(item)
+			    	item.type = typeString
+		            tableModel.push(item);
+		        }
+		        $scope.tableModel = tableModel
+		    });
+
+
+		}
 	}
 
     $scope.initiateSearch = function () {
@@ -109,6 +137,7 @@ angular.module('mdcSearch')
 	    		$scope.tableModel = [{prefTerm:"No Results Found"}];
 	    	}
 	    	else {
+	    		$scope.searchHidden = true;
 	    		$scope.tableModel = tableModel;
 	    	}
     	});

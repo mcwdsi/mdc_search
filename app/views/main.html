@@ -18,8 +18,14 @@
 <div class="container">
   <div id="retrievalTermsContainer">
     <div class=" panel panel-primary">
-      <div class="panel-body">
-        <div class='row' ng-hide='searchHidden'>
+    <div class="panel-heading clearfix"> 
+        <span class='pull-right'>
+          <!-- <button class='btn btn-info' ng-hide='searchHidden' ng-click='searchHidden = true'>Hide Details</button> -->
+          <button class='btn btn-info' ng-show='searchHidden' ng-click='searchHidden = false'>Show Details</button>
+        </span>
+      </div>
+      <div class="panel-body" ng-hide='searchHidden'>
+        <div class='row' >
           <div class='col-xs-12' >
             <h4>MDC Search</h4>
               <table class="table">
@@ -71,20 +77,19 @@
   <!-- This is the premade queries -->
   <div id="retrievalTermsContainer">
     <div class=" panel panel-primary">
-      <div class="panel-body">
-        <div class='row' ng-hide='searchHidden'>
+      <div class="panel-body" ng-hide='searchHidden'>
+        <div class='row' >
           <div class='col-xs-12' >
             <h4>Combination Search</h4>
-               <div class="radio">
-                  <label><input type="radio" name="optradio">Dataset and software</label>
-               </div>
-               <div class="radio">
-                  <label><input type="radio"  name="optradio">Software matching by input and output formats</label>
-               </div>
+            <div class='radio'>
+              <label><input type="radio" name="option" value="1"> Dataset and software</label> 
+              <label><input type="radio" name="option" value="2"> Software matching by input and output formats</label>
               <br/>
-               <button type='submit' ng-click="initiateDefaultSearch()" class="btn btn-primary pull-right" >Search</button>
+            </div>
+            <button type='submit' ng-click="initiateDefaultSearch()" class="btn btn-primary pull-right" >Search</button>
           </div>
         </div>
+      </div>
       </div>
   
 

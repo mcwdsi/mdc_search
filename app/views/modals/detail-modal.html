@@ -102,14 +102,40 @@
       <td>Host</td>
       <td>{{item.hostPopulationLabel}}</td>
     </tr>
-     <tr ng-show="item.doi">
+    <tr ng-show="item.doi">
       <td>DOI</td>
       <td>
         <a target="_blank" href='{{item.doiURL}}'>{{item.doi}}</a>
       </td>
     </tr>
-
-
-
+    <!-- Items for option queries -->
+    <tr ng-show="item.prefTerm">
+      <td>Name</td>
+      <td>{{item.prefTerm}}</td>
+    </tr>
+     <tr ng-show="item.inputSpec">
+      <td>Input </td>
+      <td>{{item.inputSpec}}</td>
+    </tr>
+    <tr ng-show="item.outputSpec">
+      <td>Output</td>
+      <td>{{item.outputSpec}}</td>
+    </tr>
+    <tr ng-show="item.inputDataFormat">
+      <td>Input data format</td>
+      <td>{{item.inputDataFormat}}</td>
+    </tr>
+    <tr ng-show="item.intermediateFormat">
+      <td>Intermediate format</td>
+      <td>{{item.intermediateFormat}}</td>
+    </tr>
+    <tr ng-show="item.softwareOne">
+      <td>First software</td>
+      <td>{{item.softwareOne}}</td>
+    </tr>
+    <tr ng-show="item.softwareTwo">
+      <td>Second software</td>
+      <td>{{item.softwareTwo}}</td>
+    </tr>
   </table>
 </div>
